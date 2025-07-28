@@ -1,0 +1,22 @@
+{
+  "name": "simple-lsp-server",
+  "version": "1.0.0",
+  "description": "A simple Language Server Protocol implementation for auto-completion",
+  "main": "out/server.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -watch -p .",
+    "start": "node out/server.js"
+  },
+  "dependencies": {
+    "vscode-languageserver": "^8.1.0",
+    "vscode-languageserver-textdocument": "^1.0.8"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

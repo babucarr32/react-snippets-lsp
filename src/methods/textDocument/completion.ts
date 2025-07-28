@@ -212,5 +212,79 @@ function getRegularCompletions() {
       kind: CompletionItemKind.Class,
       sortText: '1010',
     },
+
+
+    // === React Native Return ===
+    {
+      label: 'rnr',
+      documentation: 'React Native Return Statement',
+      insertText: `return (\n  <View>\n    \${1:content}\n  </View>\n);`,
+      insertTextFormat: InsertTextFormat.Snippet,
+      kind: CompletionItemKind.Snippet,
+      sortText: '0010',
+    },
+    // === React Return ===
+    {
+      label: 'rr',
+      documentation: 'React Return Statement',
+      insertText: `return (\n  <div>\n    \${1:content}\n  </div>\n);`,
+      insertTextFormat: InsertTextFormat.Snippet,
+      kind: CompletionItemKind.Snippet,
+      sortText: '00011',
+    },
+
+    // === React Hooks ===
+    {
+      label: 'useCallback',
+      documentation: 'React useCallback hook',
+      insertText: `const \${1:callback} = useCallback(() => {\n  \${2}\n}, [\${3}]);`,
+      insertTextFormat: InsertTextFormat.Snippet,
+      kind: CompletionItemKind.Function,
+      sortText: '1011',
+    },
+    {
+      label: 'useMemo',
+      documentation: 'React useMemo hook',
+      insertText: `const \${1:memorizedValue} = useMemo(() => \${2:value}, [\${3:dependencies}]);`,
+      insertTextFormat: InsertTextFormat.Snippet,
+      kind: CompletionItemKind.Function,
+      sortText: '1012',
+    },
+    {
+      label: 'useCustomHook',
+      documentation: 'Custom React hook boilerplate',
+      insertText: `const use\${1:CustomHook} = () => {\n  const [\${2:state}, set\${2/(.*)/\${1:/capitalize}/}] = useState(\${3:null});\n  \n  return {\n    \${2},\n  };\n};`,
+      insertTextFormat: InsertTextFormat.Snippet,
+      kind: CompletionItemKind.Snippet,
+      sortText: '1013',
+    },
+    {
+      label: 'useCustomHookExport',
+      documentation: 'Custom React hook boilerplate (exported)',
+      insertText: `export const use\${1:CustomHook} = () => {\n  const [\${2:state}, set\${2/(.*)/\${1:/capitalize}/}] = useState(\${3:null});\n\n  return {\n    \${2},\n  };\n};`,
+      insertTextFormat: InsertTextFormat.Snippet,
+      kind: CompletionItemKind.Snippet,
+      sortText: '1013',
+    },
+
+    // === React Native Navigation ===
+    {
+      label: 'rnnav',
+      documentation: 'React Navigation screen setup',
+      insertText: `import { createNativeStackNavigator } from '@react-navigation/native-stack';\n\nconst Stack = createNativeStackNavigator();\n\nconst \${1:AppNavigator} = () => {\n  return (\n    <Stack.Navigator>\n      <Stack.Screen name="\${2:Home}" component={\${3:HomeScreen}} />\n    </Stack.Navigator>\n  );\n};`,
+      insertTextFormat: InsertTextFormat.Snippet,
+      kind: CompletionItemKind.Snippet,
+      sortText: '1014',
+    },
+
+    // === React Native Style ===
+    {
+      label: 'styleObj',
+      documentation: 'Inline Style object',
+      insertText: `{\n  padding: \${1:10},\n  backgroundColor: '\${2:#fff}',\n  borderRadius: \${3:8},\n}`,
+      insertTextFormat: InsertTextFormat.Snippet,
+      kind: CompletionItemKind.Snippet,
+      sortText: '1015',
+    },
   ];
 }

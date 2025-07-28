@@ -1,5 +1,4 @@
 import { createConnection, TextDocuments, ProposedFeatures, RequestMessage } from 'vscode-languageserver/node';
-import { TextDocument } from 'vscode-languageserver-textdocument';
 import { logger } from './log';
 import { initialize } from './methods/initialize';
 import { completion } from './methods/textDocument/completion';

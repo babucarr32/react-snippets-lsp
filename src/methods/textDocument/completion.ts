@@ -279,7 +279,7 @@ function getRegularCompletions() {
 
     // === React Native Style ===
     {
-      label: 'styleObj',
+      label: 'rnStyle',
       documentation: 'Inline Style object',
       insertText: `{\n  padding: \${1:10},\n  backgroundColor: '\${2:#fff}',\n  borderRadius: \${3:8},\n}`,
       insertTextFormat: InsertTextFormat.Snippet,

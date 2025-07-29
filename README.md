@@ -195,6 +195,16 @@ ScrollView0style>View0padding>Text0color(red)
 #### React Hooks
 - `useState` - useState hook with proper naming
 - `useEffect` - useEffect hook with cleanup
+- `useMemo` - useMemo hook
+- `useCallback` - useCallback hook
+- `useCustomHook` - Custom hook
+- `useCustomHookExport` - custom hook with export
+
+#### React Native Navigation
+- `rnnav` - React Native Navigation Component
+
+#### React Native Style
+- `rnstyle` - React Native Style Object
 
 #### Quick Components
 - `View` - `<View></View>`

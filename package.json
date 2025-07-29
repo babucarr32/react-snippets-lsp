@@ -1,6 +1,6 @@
 {
   "name": "react-snippets-lsp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Language Server Protocol for React and React Native with dynamic component generation",
   "main": "dist/index.js",
   "bin": {

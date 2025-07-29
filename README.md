@@ -1,4 +1,4 @@
-# React/React Native Language Server Protocol (LSP)
+# React Snippets Language Server Protocol (LSP)
 
 A powerful LSP extension that provides intelligent code completion and dynamic snippet generation for React and React Native development.
 

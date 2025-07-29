@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+'use strict';
+
 import { createConnection, TextDocuments, ProposedFeatures, RequestMessage } from 'vscode-languageserver/node';
 import { logger } from './log';
 import { initialize } from './methods/initialize';

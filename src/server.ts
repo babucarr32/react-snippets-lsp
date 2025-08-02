@@ -6,6 +6,10 @@ import { logger } from './log';
 import { initialize } from './methods/initialize';
 import { completion } from './methods/textDocument/completion';
 import { didChange } from './methods/textDocument/didChange';
+import { cleanup, handleTermination } from './utils';
+import { exit } from './exit';
+import { shutdown } from './shutdown';
+import { store } from './store';
 
 type NotificationMethodFn = (message: RequestMessage) => ReturnType<typeof didChange>;
 type RequestMethodFn = (message: RequestMessage) => ReturnType<typeof initialize> | ReturnType<typeof completion>;
@@ -23,7 +27,28 @@ const respond = (msgId: string, result: object | null) => {
   process.stdout.write(response);
 }
 
+process.on('uncaughtException', (error) => {
+  logger.write(`Uncaught exception: ${error.message}`);
+  logger.write(error.stack || '');
+  cleanup();
+  process.exit(1);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+  logger.write(`Unhandled rejection at: ${promise}, reason: ${reason}`);
+  cleanup();
+  process.exit(1);
+});
+
+// Register signal handlers
+process.on('SIGTERM', () => handleTermination('SIGTERM'));
+process.on('SIGINT', () => handleTermination('SIGINT'));
+process.on('SIGHUP', () => handleTermination('SIGHUP'));
+
 const methodLookup: MethodLookup = {
+  exit,
+  shutdown,
   initialize,
   "textDocument/completion": completion,
   "textDocument/didChange": didChange
@@ -63,3 +88,26 @@ process.stdin.on("data", (chunk) => {
     buffer = buffer.slice(messageStart, contentLength);
   }
 });
+
+process.stdin.on('end', () => {
+  logger.write('stdin ended');
+
+  const isShuttingDown = store.get('isShuttingDown');
+  if (!isShuttingDown) {
+    cleanup();
+    process.exit(0);
+  }
+});
+
+process.stdin.on('error', (error) => {
+  logger.write(`stdin error: ${error.message}`);
+  cleanup();
+  process.exit(1);
+});
+
+// Optional: Handle process beforeExit
+process.on('beforeExit', (code) => {
+  logger.write(`Process about to exit with code: ${code}`);
+});
+
+logger.write('LSP Server started, waiting for initialize...');

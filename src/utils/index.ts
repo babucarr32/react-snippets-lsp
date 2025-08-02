@@ -1,3 +1,6 @@
+import { logger } from '../log';
+import { store } from '../store';
+
 // Get the funcName and args in Greet(foo, bar, barfoo)
 const regex = /^([a-zA-Z_][a-zA-Z0-9_]*)\(([^)]+)\)$/;
 
@@ -42,7 +45,7 @@ const buildTag = (text: string, indentLevel: number = 0): string => {
 
     const match = attr.match(regex);
     if (match) {
-      // Function-like attribute: funcName(param1, param2) // Pass mutiple values [a,b,c] // {a,b,c}
+      // Function-like attribute: funcName(param1, param2) // Pass multiple values [a,b,c] // {a,b,c}
       const funcName = match[1];
       const params = match[2].split(',').map(p => p.trim());
 
@@ -74,4 +77,25 @@ const buildTag = (text: string, indentLevel: number = 0): string => {
   return `${currentIndent}<${tagName}${attributesStr ? ' ' + attributesStr : ''}>\n${childIndent}\${${placeholderIndex}}\n${currentIndent}</${tagName}>`;
 };
 
-export { buildTag };
+const cleanup = () => {
+  logger.write('Cleaning up resources...');
+
+  // Remove all listeners
+  process.stdin.removeAllListeners('data');
+  process.stdin.removeAllListeners('end');
+  process.stdin.removeAllListeners('error');
+
+  // Close stdin if possible
+  if (process.stdin.readable) {
+    process.stdin.destroy();
+  }
+}
+
+const handleTermination = (signal: string) => {
+  logger.write(`Received ${signal}, shutting down...`);
+  store.set('isShuttingDown', true);
+  cleanup();
+  process.exit(1);
+}
+
+export { buildTag, cleanup, handleTermination };
